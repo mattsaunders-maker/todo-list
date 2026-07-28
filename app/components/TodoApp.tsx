@@ -29,7 +29,7 @@ function hasDetails(todo: Todo) {
   return Boolean(todo.description || todo.due_date || todo.priority)
 }
 
-export default function TodoApp({ page }: { page: number }) {
+export default function TodoApp({ page, userId }: { page: number; userId: string }) {
   const [todos, setTodos] = useState<Todo[]>([])
   const [totalCount, setTotalCount] = useState(0)
   const [newTask, setNewTask] = useState('')
@@ -78,6 +78,7 @@ export default function TodoApp({ page }: { page: number }) {
       description: newDescription.trim() || null,
       due_date: newDueDate || null,
       priority: newPriority,
+      user_id: userId,
     })
     if (error) console.error(error)
     else {
@@ -114,7 +115,15 @@ export default function TodoApp({ page }: { page: number }) {
 
   return (
     <main className="max-w-md mx-auto mt-16 p-6">
-      <h1 className="text-2xl font-bold mb-4">Todo List</h1>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold">Todo List</h1>
+        <button
+          onClick={() => supabase.auth.signOut()}
+          className="text-sm text-gray-500"
+        >
+          Log out
+        </button>
+      </div>
       <form onSubmit={addTodo} className="flex flex-col gap-2 mb-6">
         <input
           value={newTask}

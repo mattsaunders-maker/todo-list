@@ -1,4 +1,4 @@
-import TodoApp from '@/app/components/TodoApp'
+import ProtectedTodoApp from '@/app/components/ProtectedTodoApp'
 
 export default async function Page({
   params,
@@ -9,5 +9,5 @@ export default async function Page({
   const pageNumber = Number(page)
   const validPage = Number.isInteger(pageNumber) && pageNumber >= 1 ? pageNumber : 1
 
-  return <TodoApp page={validPage} />
+  return <ProtectedTodoApp page={validPage} />
 }
